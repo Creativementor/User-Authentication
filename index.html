@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+    <div class="auth_contaienr">
+        <div class="main-container">
+            <h1>Create Account</h1>
+            <input type="email" placeholder="new email" id="signup_email">
+            <input type="email" placeholder="new password" id="signup_password">
+            <button id="create_btn">Create</button>
+        </div>
+    
+        <div class="login">
+            <h1>Sign in to Your Account</h1>
+            <input type="email" id="signin_email" placeholder="Enter Your Email">
+            <input type="email" id="signin_password" placeholder="Enter Password">
+            <button id="login_btn">Login</button>
+        </div>
+    </div>
+
+    <div class="user_container">
+        <h1 id="user_email"></h1>
+        <button id="logout_btn">logout</button>
+    </div>
+
+    <script src="app.js" type="module"></script>
+</body>
+
+</html>
