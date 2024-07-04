@@ -1,12 +1,12 @@
+
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
 import {
     getAuth,
     onAuthStateChanged,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,102 +23,57 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
+// console.log("App =>" , app);
+
 const analytics = getAnalytics(app);
+
 const auth = getAuth(app);
+// console.log("Auth =>" , auth);
 
-const signup_email = document.getElementById("signup_email");
-const signup_password = document.getElementById("signup_password");
-const create_btn = document.getElementById("create_btn");
+const signup_email = document.getElementById("signup_email")
+const signup_password = document.getElementById("signup_password")
+const signup_btn = document.getElementById("signup_btn")
 
-
-const signIn_email = document.getElementById("signIn_email");
-const signIn_password = document.getElementById("signIn_password");
-const logIn_btn = document.getElementById("logIn_btn");
-
-const auth_container = document.getElementById("auth_container");
-const user_container = document.getElementById("user_container");
-
-const user_email = document.getElementById("user_email");
-const logout_btn = document.getElementById("logout_btn");
+const signin_email = document.getElementById("signin_email")
+const signin_password = document.getElementById("signin_password")
+const signin_btn = document.getElementById("signin_btn")
 
 
-
-create_btn.addEventListener("click", createUserAccount);
-logIn_btn.addEventListener("click", signInAccount);
+signup_btn.addEventListener("click", createUserAccount)
+signin_btn.addEventListener("click" , signAccount)
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log("user is logged in");
-
+        console.log("User is logged in");
         const uid = user.uid;
 
-        auth_container.style.display = "none";
-        user_container.style.display = "block";
-        user_email.innerText = user_email;
-        // ...
     } else {
-        console.log("user is not logged in");
-        // User is signed out
-        // ...
-        auth_container.style.display = "block";
-        user_container.style.display = "none";
+        console.log("User is not logged in");
     }
 });
 
 function createUserAccount() {
-    // console.log("Email =>" , signup_email.value);
-    // console.log("Password =>" , signup_password.value);
+    // console.log("email =>" , signup_email.value);
+    // console.log("email =>" , signup_password.value);
 
     createUserWithEmailAndPassword(
-
         auth,
         signup_email.value,
         signup_password.value
     )
-
         .then((userCredential) => {
-            // Signed up 
+
             const user = userCredential.user;
-            // ...
+            console.log("User =>", user);
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            // ..
+            alert(errorMessage);
         });
-
-    alert(errorMessage)
-
-    // main.container.style.diplay = 
 }
 
-
-
-function signInAccount() {
-    // console.log("Email =>" , signIn_email.value);
-    // console.log("password =>" , signIn_password);
-
-    console.log("user");
-
-
-    signInWithEmailAndPassword(
-        auth,
-        signIn_email.value,
-        signIn_password.value
-    )
-
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert(errorMessage)
-        });
-
-
+function signAccount () {
+    
 }
