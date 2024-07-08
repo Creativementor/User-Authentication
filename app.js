@@ -5,7 +5,9 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebas
 import {
     getAuth,
     onAuthStateChanged,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut
 } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -31,25 +33,36 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 // console.log("Auth =>" , auth);
 
-const signup_email = document.getElementById("signup_email")
-const signup_password = document.getElementById("signup_password")
-const signup_btn = document.getElementById("signup_btn")
+const signup_email = document.getElementById("signup_email");
+const signup_password = document.getElementById("signup_password");
+const signup_btn = document.getElementById("signup_btn");
 
-const signin_email = document.getElementById("signin_email")
-const signin_password = document.getElementById("signin_password")
-const signin_btn = document.getElementById("signin_btn")
+const signin_email = document.getElementById("signin_email");
+const signin_password = document.getElementById("signin_password");
+const signin_btn = document.getElementById("signin_btn");
 
+const user_email = document.getElementById("user_email");
+const logout_btn = document.getElementById("logout_btn");
 
-signup_btn.addEventListener("click", createUserAccount)
-signin_btn.addEventListener("click" , signAccount)
+const auth_container = document.getElementById("auth_container")
+const user_container = document.getElementById("user_container")
+
+signup_btn.addEventListener("click", createUserAccount);
+signin_btn.addEventListener("click", signinAccount);
+logout_btn.addEventListener("click", logout)
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         console.log("User is logged in");
         const uid = user.uid;
+        auth_container.style.display = "none"
+        user_container.style.display = "block"
+        user_email.innerText = user.email;
 
     } else {
         console.log("User is not logged in");
+        auth_container.style.display = "block"
+        user_container.style.display = "none"
     }
 });
 
@@ -74,6 +87,31 @@ function createUserAccount() {
         });
 }
 
-function signAccount () {
-    
+function signinAccount() {
+    signInWithEmailAndPassword(
+        auth,
+        signin_email.value,
+        signin_password.value
+    )
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log("user");
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage);
+        });
+
+}
+
+function logout() {
+    signOut(auth).then(() => {
+        // Sign-out successful.
+    }).catch((error) => {
+        // An error happened.
+    });
+
 }
